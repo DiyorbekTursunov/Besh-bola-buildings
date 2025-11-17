@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+@font-face {
+  font-family: "HelveticaNeue";
+  src: url("../fonts/HelveticaNeueHeavy.woff2") format("woff2");
+  font-weight: 750;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HelveticaNeueLTStd";
+  src: url("../fonts/HelveticaNeueLTStd-Heavy.otf") format("opentype");
+  font-weight: 750;
+  font-style: normal;
+  font-display: swap;
+}
+
+.bg-hero {
+  background-image: url(/hero-img.png);
+  width: 100%;
+}
+
+.house-image-swiper .swiper-pagination-bullet {
+  background-color: #000000;
+  opacity: 0.5;
+}
+
+.house-image-swiper .swiper-pagination-bullet-active {
+  background-color: #000000;
+  opacity: 1;
+}
+
+
