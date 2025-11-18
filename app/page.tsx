@@ -12,118 +12,161 @@ import { HouseBlock, houses } from "./components/home-card";
 import { useState } from "react";
 
 export default function Home() {
-  const [modalIsOpen, setmodalIsOpen] = useState(false);
+  const [modalIsOpen, setmodalIsOpen] = useState(false); // operator form
+  const [openModal, setopenModal] = useState(false); // prices modal
 
-  return modalIsOpen ? (
-    <>
-      <header>
-        <div className="container flex justify-between items-center">
-          <a href={"/"}>
-            <Image src={"/logo.png"} alt="Logo" width={52} height={56} />
-          </a>
+  const plans = [
+    {
+      id: "no-start",
+      label: "Boshlang'ich to'lovsiz",
+      discount: "Yo‘q",
+      payment: "4 mln 102 000 so‘m, 60 oyga",
+      bonusTitle: "BONUS",
+      bonusText: "Yo‘q",
+      hasBonus: false,
+    },
+    {
+      id: "25",
+      label: "Boshlang'ich 25 mln so‘m",
+      discount: "3 mln 858 000 so‘m",
+      payment: "3 mln 520 000 so‘m, 60 oyga",
+      bonusTitle: "BONUS!",
+      bonusText: "Bepul konditsioner",
+      hasBonus: true,
+    },
+    {
+      id: "60",
+      label: "Boshlang'ich 60 mln so‘m",
+      discount: "9 mln 858 000 so‘m",
+      payment: "3 mln 520 000 so‘m, 60 oyga",
+      bonusTitle: "BONUS!",
+      bonusText: "Bepul konditsioner",
+      hasBonus: true,
+    },
+    {
+      id: "120",
+      label: "Boshlang'ich 120 mln so‘m",
+      discount: "9 mln 858 000 so‘m",
+      payment: "3 mln 520 000 so‘m, 60 oyga",
+      bonusTitle: "BONUS!",
+      bonusText: "Bepul konditsioner",
+      hasBonus: true,
+    },
+  ];
 
-          <p className="leading-4 uppercase font-[750] text-[14px] font-[HelveticaNeueLTStd]">
-            Besh bola <br /> <span className="text-[#E84B0F]">buildings</span>
-          </p>
-        </div>
-      </header>
+  const [selectedPlanId, setSelectedPlanId] = useState("no-start");
+  const selectedPlan = plans.find((p) => p.id === selectedPlanId)!;
 
-      <section className="py-10 bg-[#FDFDFD]">
-        <div className="max-w-[374px] mx-auto px-4 text-center font-[HelveticaNeueLTStd]">
-          {/* Title */}
-          <h2 className="font-[750] font-[HelveticaNeueLTStd] tracking-[0.04em] text-[clamp(20px,6vw,24px)] leading-[1.1] mb-2 uppercase">
-            operator bilan bog’lanish
-          </h2>
+  // ==== 1) Operator bilan bog'lanish sahifasi (oldingi modalIsOpen qismi) ====
+  if (modalIsOpen) {
+    return (
+      <>
+        <header>
+          <div className="container flex justify-between items-center">
+            <a href={"/"}>
+              <Image src={"/logo.png"} alt="Logo" width={52} height={56} />
+            </a>
 
-          {/* Subtitle */}
-          <p className="text-[clamp(9px,2.6vw,11px)] leading-[1.4] mb-6 font-[HelveticaNeueLTStd]">
-            Ismingiz va Telefon raqamingizni yuboring, <br /> qisqa muddatda siz
-            bilan bog’lanamiz 😊
-          </p>
+            <p className="leading-4 uppercase font-[750] text-[14px] font-[HelveticaNeueLTStd]">
+              Besh bola <br /> <span className="text-[#E84B0F]">buildings</span>
+            </p>
+          </div>
+        </header>
 
-          {/* Card */}
-          <form className="bg-[#F3F3F3] border border-[#999999] rounded-3xl px-5 py-[22px] text-left shadow-[0_4px_0_0_rgba(0,0,0,0.12)] font-[Poppins]" action={"/thank-you"}>
-            {/* Name */}
-            <label className="block mb-3.5">
-              <span className="block text-[14px] mb-1.5">
-                Ismingizni kiriting:
-              </span>
-              <input
-                required
-                type="text"
-                placeholder="Ismingiz"
-                className="w-full h-12 rounded-[10px] border border-[#D3D3D3] bg-white px-4 text-[14px] placeholder:text-[#B4B4B4] outline-none focus:border-[#FF8500]"
-              />
-            </label>
+        <section className="py-10 bg-[#FDFDFD]">
+          <div className="max-w-[374px] mx-auto px-4 text-center font-[HelveticaNeueLTStd]">
+            <h2 className="font-[750] font-[HelveticaNeueLTStd] tracking-[0.04em] text-[clamp(20px,6vw,24px)] leading-[1.1] mb-2 uppercase">
+              operator bilan bog’lanish
+            </h2>
 
-            {/* Phone */}
-            <label className="block mb-5">
-              <span className="block text-[14px] mb-1.5">
-                Telefon raqamingiz:
-              </span>
+            <p className="text-[clamp(9px,2.6vw,11px)] leading-[1.4] mb-6 font-[HelveticaNeueLTStd]">
+              Ismingiz va Telefon raqamingizni yuboring, <br /> qisqa muddatda
+              siz bilan bog’lanamiz 😊
+            </p>
 
-              <div className="flex gap-1.5">
-                {/* Country code SELECT */}
-                <div className="relative w-[88px]">
-                  <select
-                    name="countryCode"
-                    defaultValue="+998"
-                    required
-                    className="w-full h-12 rounded-[10px] bg-[#A6A6A6] text-white
-                   px-3 pr-8 text-[14px] outline-none cursor-pointer
-                   appearance-none" // <–– hides default arrow in modern browsers
-                  >
-                    <option value="+998">+998</option>
-                    <option value="+7">+7</option>
-                    <option value="+1">+1</option>
-                    <option value="+996">+996</option>
-                    <option value="+992">+992</option>
-                  </select>
-
-                  {/* Custom arrow icon */}
-                  <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 12 12"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M3 4.5L6 7.5L9 4.5"
-                        stroke="white"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                </div>
-
-                {/* Phone input */}
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="88 888 88 88"
-                  required
-                  className="flex-1 h-12 rounded-[10px] border border-[#D3D3D3] bg-white px-4
-                 text-[14px] placeholder:text-[#B4B4B4] outline-none focus:border-[#FF8500] w-full"
-                />
-              </div>
-            </label>
-
-            {/* Submit button */}
-            <button
-              type="submit"
-              className="w-full h-[54px] rounded-[999px] bg-[#FF8500] text-white font-[750] text-[clamp(15px,4vw,18px)] shadow-[0_6px_0_0_#C26500] flex items-center justify-center mt-2"
+            <form
+              className="bg-[#F3F3F3] border border-[#999999] rounded-3xl px-5 py-[22px] text-left shadow-[0_4px_0_0_rgba(0,0,0,0.12)] font-[Poppins]"
+              action={"/thank-you"}
             >
-              Ma’lumotlarni yuborish
-            </button>
-          </form>
-        </div>
-      </section>
-    </>
-  ) : (
+              <label className="block mb-3.5">
+                <span className="block text-[14px] mb-1.5">
+                  Ismingizni kiriting:
+                </span>
+                <input
+                  required
+                  type="text"
+                  placeholder="Ismingiz"
+                  className="w-full h-12 rounded-[10px] border border-[#D3D3D3] bg-white px-4 text-[14px] placeholder:text-[#B4B4B4] outline-none focus:border-[#FF8500]"
+                />
+              </label>
+
+              <label className="block mb-5">
+                <span className="block text-[14px] mb-1.5">
+                  Telefon raqamingiz:
+                </span>
+
+                <div className="flex gap-1.5">
+                  <div className="relative w-[88px]">
+                    <select
+                      name="countryCode"
+                      defaultValue="+998"
+                      required
+                      className="w-full h-12 rounded-[10px] bg-[#A6A6A6] text-white
+                        px-3 pr-8 text-[14px] outline-none cursor-pointer
+                        appearance-none"
+                    >
+                      <option value="+998">+998</option>
+                      <option value="+7">+7</option>
+                      <option value="+1">+1</option>
+                      <option value="+996">+996</option>
+                      <option value="+992">+992</option>
+                    </select>
+
+                    <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2">
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M3 4.5L6 7.5L9 4.5"
+                          stroke="white"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="88 888 88 88"
+                    required
+                    className="flex-1 h-12 rounded-[10px] border border-[#D3D3D3] bg-white px-4
+                      text-[14px] placeholder:text-[#B4B4B4] outline-none focus:border-[#FF8500] w-full"
+                  />
+                </div>
+              </label>
+
+              <button
+                type="submit"
+                className="w-full h-[54px] rounded-[999px] bg-[#FF8500] text-white font-[750] text-[clamp(15px,4vw,18px)] shadow-[0_6px_0_0_#C26500] flex items-center justify-center mt-2"
+              >
+                Ma’lumotlarni yuborish
+              </button>
+            </form>
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  // ==== 2) Asosiy sahifa + narxlar modali ====
+  return (
     <>
       <header className="bg-[#CEE2F2] rounded-br-[20px] rounded-bl-[20px]">
         <div className="container flex justify-between items-center">
@@ -191,23 +234,20 @@ export default function Home() {
       <section className="bg-[#FFF6ED] pt-[18px] pb-10">
         <div className="max-w-[374px] px-4 mx-auto space-y-[83px]">
           {houses.map((house) => (
-            <HouseBlock key={house.id} {...house} />
+            <HouseBlock key={house.id} {...house} setopenModal={setopenModal} />
           ))}
         </div>
       </section>
 
       <section className="bg-[#FBFBFB] pt-8 [@media(max-width:400px)]:pb-0 pb-10 font-[HelveticaNeueLTStd]">
         <div className="max-w-[444px] mx-auto px-4 mb-[50px]">
-          {/* Title */}
           <h2 className="font-[750] leading-[120%] text-[#111111] font-[HelveticaNeueLTStd] mb-5 text-[clamp(16px,5vw,24px)]">
             Nima uchun <span className="text-[#F18107]">Marg’ilon City</span>{" "}
             <br />
             dan uy olishingiz kerak?
           </h2>
 
-          {/* Row 1: 2 small cards */}
           <div className="grid grid-cols-2 gap-2.5 mb-2.5">
-            {/* Qulay joylashuv */}
             <div className="flex items-center justify-between border border-[#FFB45A] rounded-2xl px-2.5 py-3 relative shadow-[0px_2px_15px_0px_#EA50154D]">
               <p className="font-bold leading-[1.2] [@media(max-width:400px)]:pb-6 pb-11 text-[clamp(12px,3.3vw,17px)] max-w-[clamp(70px,22vw,90px)]">
                 Qulay <br /> joylashuv
@@ -222,7 +262,6 @@ export default function Home() {
               />
             </div>
 
-            {/* 24/7 Xavfsizlik */}
             <div className="flex items-center justify-between border border-[#FFB45A] rounded-2xl px-2.5 py-3 relative shadow-[0px_2px_15px_0px_#EA50154D]">
               <p className="font-bold leading-[1.2] [@media(max-width:400px)]:pb-6 pb-11 text-[clamp(12px,3.3vw,17px)] max-w-[clamp(70px,22vw,90px)]">
                 24/7 <br /> Xavfsizlik
@@ -238,7 +277,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Row 2: full-width card */}
           <div className="mb-2.5">
             <div className="border border-[#FFB45A] rounded-2xl px-3.5 py-3.5 relative shadow-[0px_2px_15px_0px_#EA50154D]">
               <p className="font-bold leading-[1.2] [@media(max-width:400px)]:pb-6 pb-11 text-[clamp(12px,3.3vw,17px)]">
@@ -255,7 +293,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Row 3: full-width card */}
           <div>
             <div className="border border-[#FFB45A] rounded-2xl px-3.5 py-3.5 relative overflow-hidden shadow-[0px_2px_15px_0px_#EA50154D]">
               <p className="font-bold leading-[1.2] pb-11 text-[clamp(12px,3.3vw,17px)]">
@@ -298,12 +335,10 @@ export default function Home() {
 
       <section>
         <>
-          {/* Title */}
           <h2 className="text-[clamp(24px,5.5vw,32px)] leading-[130%] font-[750] font-[HelveticaNeueLTStd] text-center mb-4">
             Manzilimiz
           </h2>
 
-          {/* Map image */}
           <div className="max-w-[500px] mx-auto w-full overflow-hidden">
             <Image
               src={mapImage}
@@ -314,23 +349,13 @@ export default function Home() {
             />
           </div>
 
-          {/* Bottom dark footer strip */}
           <div className="bg-[#1A1A1A] px-4 py-3">
             <div className="container flex items-center justify-between gap-3">
-              {/* Left: logo */}
               <div className="flex items-center">
-                <Image
-                  src="/logo.png"
-                  alt="BBB logo"
-                  width={52}
-                  height={56}
-                  className=""
-                />
+                <Image src="/logo.png" alt="BBB logo" width={52} height={56} />
               </div>
 
-              {/* Right: socials + phone */}
               <div className="flex items-end flex-col gap-[9px]">
-                {/* Social icons */}
                 <div className="flex items-center gap-1.5">
                   <Link href="#" target="_blank" rel="noopener noreferrer">
                     <Image
@@ -352,7 +377,6 @@ export default function Home() {
                   </Link>
                 </div>
 
-                {/* Phone button */}
                 <a
                   href="tel:+998911265503"
                   className="flex items-center gap-y-2.5 gap-x-[7px] text-white rounded-full font-bold underline text-[18px]"
@@ -371,6 +395,139 @@ export default function Home() {
           </div>
         </>
       </section>
+
+      {/* ==== Narxlar modali ==== */}
+      {openModal && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/40 z-40"
+            onClick={() => setopenModal(false)}
+          />
+
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+            <div className="relative w-full max-w-[360px] bg-white rounded-[26px] shadow-[0_12px_40px_rgba(0,0,0,0.25)] pt-6 pb-5 px-4">
+              <button
+                type="button"
+                onClick={() => setopenModal(false)}
+                className="absolute right-3 top-3 w-7 h-7 flex items-center justify-center rounded-full text-black text-[20px]"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M8.00911 10.1537L13.3973 15.5357C13.6833 15.8213 14.0711 15.9818 14.4754 15.9818C14.8798 15.9818 15.2675 15.8213 15.5535 15.5357C15.8394 15.2502 16 14.8628 16 14.4589C16 14.055 15.8394 13.6677 15.5535 13.3821L10.1632 8L15.5524 2.61791C15.6939 2.4765 15.8062 2.30863 15.8827 2.12389C15.9593 1.93916 15.9987 1.74117 15.9986 1.54123C15.9986 1.34129 15.9591 1.14332 15.8825 0.958621C15.8058 0.773921 15.6935 0.606108 15.5519 0.464764C15.4104 0.32342 15.2423 0.211313 15.0574 0.134844C14.8724 0.0583746 14.6742 0.0190406 14.474 0.0190878C14.2739 0.0191349 14.0757 0.0585623 13.8908 0.135119C13.7058 0.211675 13.5378 0.323861 13.3963 0.465272L8.00911 5.84737L2.62088 0.465272C2.48035 0.319805 2.31223 0.20375 2.12632 0.123877C1.94041 0.044005 1.74044 0.00191503 1.53807 6.38416e-05C1.3357 -0.00178735 1.13499 0.0366372 0.947644 0.113095C0.760302 0.189553 0.590079 0.302514 0.44691 0.445385C0.30374 0.588257 0.19049 0.758179 0.113768 0.945236C0.0370463 1.13229 -0.00161105 1.33274 5.14305e-05 1.53488C0.00171391 1.73702 0.0436629 1.9368 0.123451 2.12258C0.203239 2.30835 0.319268 2.47639 0.464769 2.61689L5.85504 8L0.465785 13.3831C0.320284 13.5236 0.204255 13.6917 0.124467 13.8774C0.0446789 14.0632 0.00272991 14.263 0.00106743 14.4651C-0.000595046 14.6673 0.0380623 14.8677 0.114784 15.0548C0.191506 15.2418 0.304756 15.4117 0.447926 15.5546C0.591095 15.6975 0.761318 15.8104 0.94866 15.8869C1.136 15.9634 1.33671 16.0018 1.53908 15.9999C1.74145 15.9981 1.94142 15.956 2.12733 15.8761C2.31324 15.7963 2.48137 15.6802 2.62189 15.5347L8.00911 10.1537Z"
+                    fill="black"
+                  />
+                </svg>
+              </button>
+
+              <h2 className="text-center font-[750] text-[18px] leading-[120%] mb-4 uppercase font-[HelveticaNeueLTStd]">
+                NARXLAR BILAN <br /> BATAFSIL TANISHING
+              </h2>
+
+              <div className="mb-4">
+                <div className="relative">
+                  <select
+                    value={selectedPlanId}
+                    onChange={(e) => setSelectedPlanId(e.target.value)}
+                    className="w-full h-[46px] rounded-[10px] bg-[#FC4A06] text-white text-[14px] font-[750] px-4 pr-9 shadow-[0_4px_0_0_#C26500] outline-none cursor-pointer appearance-none"
+                  >
+                    <option value="no-start">
+                      Boshlang'ich to'lovni tanlang
+                    </option>
+                    {plans.map((plan) => (
+                      <option key={plan.id} value={plan.id}>
+                        {plan.label}
+                      </option>
+                    ))}
+                  </select>
+
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3 4.5L6 7.5L9 4.5"
+                        stroke="white"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <div className="space-y-2.5 mb-5">
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+                    <p className="text-[18px] font-bold mb-1">Chegirma:</p>
+                    <p className="text-[12px] leading-[1.2]">
+                      {selectedPlan.discount}
+                    </p>
+                  </div>
+
+                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+                    <p className="text-[18px] font-bold mb-1">Oylik to‘lov:</p>
+                    <p className="text-[12px] leading-[1.2]">
+                      {selectedPlan.payment}
+                    </p>
+                  </div>
+                </div>
+
+                {selectedPlan.hasBonus ? (
+                  <div className="rounded-[14px] flex justify-between items-start overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.12)] pl-2.5">
+                    <div className="mt-2.5">
+                      <p className="text-[18px] font-[750] mb-1">
+                        {selectedPlan.bonusTitle}
+                      </p>
+                      <p className="text-[14px] leading-[1.2]">
+                        {selectedPlan.bonusText}
+                      </p>
+                    </div>
+                    <div className="w-full max-w-[168px] fex bg-linear-to-r from-[#FF8500] to-[#FFB733] px-3 flex items-center justify-center m-1 rounded-[10px]">
+                      {/* Konditsioner rasmi bo'lsa shu yerga qo'yasan */}
+                      <Image
+                        src="/konditsioner.png"
+                        alt="Bonus"
+                        width={115}
+                        height={86}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+                    <p className="text-[11px] font-bold mb-1">BONUS</p>
+                    <p className="text-[12px] leading-[1.2]">
+                      {selectedPlan.bonusText}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <button
+                onClick={() => {
+                  setmodalIsOpen(true);
+                  setopenModal(false);
+                }}
+                className="py-2.5 w-full bg-[#FF8500] border border-[#C26500] rounded-[100px] font-bold text-white shadow-[0px_4px_0px_0px_#C26500] text-[clamp(15px,3.5vw,20px)]"
+              >
+                Operator bilan bog’lanish {">>"}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
