@@ -1,11 +1,61 @@
 "use client";
 
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import arrowImage from "../../public/b/arrow-hero.png";
-import { HouseBlockSecont, secoundHouses } from "../components/home-card-2";
 import Link from "next/link";
 
-const thankYou = () => {
+const GOOGLE_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwhQLovZhZgIcOpWIYWitkWkT_4RVgkXdBWMfM0bdp4TtPjmA7uEwUKLY3c19401sSr/exec";
+
+const ThankYou = () => {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const countryCode = searchParams.get("countryCode") || "+998";
+    const phoneParam = searchParams.get("phone") || "";
+    const nameParam = searchParams.get("name") || "";
+
+    if (!phoneParam) {
+      console.warn("No phone in URL, skipping lead send");
+      return;
+    }
+
+    // faqat raqamlarni olib, to‘liq raqam yasaymiz
+    const digits = phoneParam.replace(/\D/g, "");
+    const fullPhone =
+      phoneParam.startsWith("+") || phoneParam.startsWith("00")
+        ? phoneParam
+        : `${countryCode}${digits}`;
+
+    // Sana + vaqt
+    const now = new Date();
+    const pad = (n: number) => String(n).padStart(2, "0");
+    const formattedDateTime = `${now.getFullYear()}-${pad(
+      now.getMonth() + 1
+    )}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(
+      now.getMinutes()
+    )}:${pad(now.getSeconds())}`;
+
+    // 🔥 FormData qilib yuboramiz – CORS preflight bo‘lmaydi
+    const formData = new FormData();
+    formData.append("sheetName", "Lead");
+    formData.append("Telefon raqam", fullPhone);
+    formData.append("Royhatdan o'tgan vaqti", formattedDateTime);
+
+    // agar `Lead` varaqiga `Ism` ustunini qo‘shgan bo‘lsang:
+    if (nameParam) {
+      formData.append("Ism", nameParam);
+    }
+
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      body: formData,
+    }).catch((err) => {
+      console.error("Failed to send lead (no-cors):", err);
+    });
+  }, [searchParams]);
+
   return (
     <>
       <header>
@@ -33,19 +83,18 @@ const thankYou = () => {
         </svg>
 
         <h2 className="font-[750] font-[HelveticaNeueLTStd] tracking-[0.04em] text-[clamp(20px,6vw,24px)] leading-[1.1] mb-2 uppercase text-center">
-          Ma’lumotlar yuborildi
+          Ma’lumotlar <br /> yuborildi
         </h2>
 
-        {/* Submit button */}
-        <Link href={"/"}
-          type="submit"
+        <Link
+          href="/"
           className="w-full max-w-[293px] h-[54px] rounded-[999px] bg-[#FF8500] text-white font-[750] text-[clamp(15px,4vw,18px)] shadow-[0_6px_0_0_#C26500] flex items-center justify-center mt-2"
         >
-         Asosiy sahifaga qaytish
+          Asosiy sahifaga qaytish
         </Link>
       </section>
     </>
   );
 };
 
-export default thankYou;
+export default ThankYou;

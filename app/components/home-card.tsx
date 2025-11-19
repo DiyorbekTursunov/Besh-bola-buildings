@@ -57,6 +57,7 @@ export const houses = [
 
 // 🔹 Bitta kartka + heading bloki
 export function HouseBlock({
+  id,
   setopenModal,
   headingTop,
   headingMid,
@@ -67,6 +68,7 @@ export function HouseBlock({
   rooms,
   images,
 }: {
+  id: number;
   setopenModal: any;
   headingTop: string;
   headingMid: string;
@@ -147,7 +149,10 @@ export function HouseBlock({
           </div>
         </div>
 
-        <button onClick={() => setopenModal(true)} className="py-2.5 w-full bg-[#FF8500] border border-[#C26500] rounded-[100px] font-bold text-white shadow-[0px_4px_0px_0px_#C26500] text-[clamp(15px,3.5vw,20px)]">
+        <button
+          onClick={() => setopenModal(id)}
+          className="py-2.5 w-full bg-[#FF8500] border border-[#C26500] rounded-[100px] font-bold text-white shadow-[0px_4px_0px_0px_#C26500] text-[clamp(15px,3.5vw,20px)]"
+        >
           Narxlar va sovg’alarni bilish {">>"}
         </button>
       </div>

@@ -5,15 +5,14 @@ import locationImg from "../public/location.png";
 import cameraImg from "../public/camera.png";
 import desingImg from "../public/desing.png";
 import freeParkingImg from "../public/free-parking.png";
-import mapImage from "../public/map-image.png";
 
 import Link from "next/link";
 import { HouseBlock, houses } from "./components/home-card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [modalIsOpen, setmodalIsOpen] = useState(false); // operator form
-  const [openModal, setopenModal] = useState(false); // prices modal
+  const [openModal, setopenModal] = useState(0); // prices modal
 
   const plans = [
     {
@@ -28,8 +27,8 @@ export default function Home() {
     {
       id: "25",
       label: "Boshlang'ich 25 mln so‘m",
-      discount: "3 mln 858 000 so‘m",
-      payment: "3 mln 520 000 so‘m, 60 oyga",
+      discount: "9 mln 858.000 so’m",
+      payment: "3 mln 520.000 so’m 60 oyga",
       bonusTitle: "BONUS!",
       bonusText: "Bepul konditsioner",
       hasBonus: true,
@@ -37,25 +36,137 @@ export default function Home() {
     {
       id: "60",
       label: "Boshlang'ich 60 mln so‘m",
-      discount: "9 mln 858 000 so‘m",
-      payment: "3 mln 520 000 so‘m, 60 oyga",
+      discount: "32 mln 860.000 so’m",
+      payment: "2 mln 554.000 so’m 60 oyga",
       bonusTitle: "BONUS!",
-      bonusText: "Bepul konditsioner",
+      bonusText: "Parkovka, Televizor va Muzlatgich",
       hasBonus: true,
     },
     {
       id: "120",
       label: "Boshlang'ich 120 mln so‘m",
-      discount: "9 mln 858 000 so‘m",
-      payment: "3 mln 520 000 so‘m, 60 oyga",
+      discount: "49 mln 290.000 so’m",
+      payment: "1 mln 280.000 so’m 60 oyga",
       bonusTitle: "BONUS!",
-      bonusText: "Bepul konditsioner",
+      bonusText: "Parkovka, Televizor, Muzlatgich va Iphone 17 Pro",
       hasBonus: true,
     },
   ];
 
+  const plans2 = [
+    {
+      id: "no-start",
+      label: "Boshlang'ich to'lovsiz",
+      discount: "Yo‘q",
+      payment: "7 mln 40.000 so’m 60 oyga",
+      bonusTitle: "BONUS",
+      bonusText: "Yo‘q",
+      hasBonus: false,
+    },
+    {
+      id: "25",
+      label: "Boshlang’ich 60 mln so’m",
+      discount: "56 mln 400.000 so’m",
+      payment: "5 mln 100.000 so’m 60 oyga",
+      bonusTitle: "BONUS!",
+      bonusText: "Parkovka, Televizorva Muzlatgich",
+      hasBonus: true,
+    },
+  ];
+
+  const plans3 = [
+    {
+      id: "no-start",
+      label: "Boshlang'ich to'lovsiz",
+      discount: "Yo‘q",
+      payment: "5 mln 729.000 so’m 60 oyga",
+      bonusTitle: "BONUS",
+      bonusText: "Yo‘q",
+      hasBonus: false,
+    },
+    {
+      id: "25",
+      label: "Boshlang'ich 25 mln so‘m",
+      discount: "13 mln 770.000 so’m",
+      payment: "5 mln 83.000 so’m 60 oyga",
+      bonusTitle: "BONUS!",
+      bonusText: "Bepul konditsioner",
+      hasBonus: true,
+    },
+    {
+      id: "60",
+      label: "Boshlang'ich 60 mln so‘m",
+      discount: "45 mln 900.000 so’m",
+      payment: "3 mln 964.000 so’m 60 oyga",
+      bonusTitle: "BONUS!",
+      bonusText: "Parkovka, Televizor va Muzlatgich",
+      hasBonus: true,
+    },
+    {
+      id: "120",
+      label: "Boshlang'ich 120 mln so‘m",
+      discount: "68 mln 850.000 so’m",
+      payment: "2 mln 582.000 so’m 60 oyga",
+      bonusTitle: "BONUS!",
+      bonusText: "Parkovka, Televizor, Muzlatgich va Iphone 17 Pro",
+      hasBonus: true,
+    },
+  ];
+
+  const plans4 = [
+    {
+      id: "no-start",
+      label: "Boshlang'ich to'lovsiz",
+      discount: "Yo‘q",
+      payment: "6 mln 522.000 so’m 60 oyga",
+      bonusTitle: "BONUS",
+      bonusText: "Yo‘q",
+      hasBonus: false,
+    },
+    {
+      id: "25",
+      label: "Boshlang'ich 25 mln so‘m",
+      discount: "15 mln 675.000 so’m",
+      payment: "5 mln 844.000 so’m 60 oyga",
+      bonusTitle: "BONUS!",
+      bonusText: "Bepul konditsioner",
+      hasBonus: true,
+    },
+    {
+      id: "60",
+      label: "Boshlang'ich 60 mln so‘m",
+      discount: "52 mln 250.000 so’m",
+      payment: "4 mln 651.000 so’m 60 oyga",
+      bonusTitle: "BONUS!",
+      bonusText: "Parkovka, Televizor va Muzlatgich",
+      hasBonus: true,
+    },
+    {
+      id: "120",
+      label: "Boshlang'ich 120 mln so‘m",
+      discount: "78 mln 375.000 so’m",
+      payment: "3 mln 216.000 so’m 60 oyga",
+      bonusTitle: "BONUS!",
+      bonusText: "Parkovka, Televizor, Muzlatgich va Iphone 17 Pro",
+      hasBonus: true,
+    },
+  ];
+
+  useEffect(() => {
+    setSelectedPlanId("no-start");
+    setSelectedPlanId2("no-start");
+    setSelectedPlanId3("no-start");
+    setSelectedPlanId4("no-start");
+  }, [openModal]);
+
   const [selectedPlanId, setSelectedPlanId] = useState("no-start");
+  const [selectedPlanId2, setSelectedPlanId2] = useState("no-start");
+  const [selectedPlanId3, setSelectedPlanId3] = useState("no-start");
+  const [selectedPlanId4, setSelectedPlanId4] = useState("no-start");
   const selectedPlan = plans.find((p) => p.id === selectedPlanId)!;
+  const selectedPlan2 = plans2.find((p) => p.id === selectedPlanId2)!;
+  const selectedPlan3 = plans3.find((p) => p.id === selectedPlanId3)!;
+  const selectedPlan4 = plans4.find((p) => p.id === selectedPlanId4)!;
 
   // ==== 1) Operator bilan bog'lanish sahifasi (oldingi modalIsOpen qismi) ====
   if (modalIsOpen) {
@@ -84,9 +195,11 @@ export default function Home() {
               siz bilan bog’lanamiz 😊
             </p>
 
+            {/* === Operator modal ichidagi forma (Home component ichida) === */}
             <form
               className="bg-[#F3F3F3] border border-[#999999] rounded-3xl px-5 py-[22px] text-left shadow-[0_4px_0_0_rgba(0,0,0,0.12)] font-[Poppins]"
-              action={"/thank-you"}
+              action="/thank-you"
+              method="GET" // 👈 GET bo‘lsin, queryga chiqishi uchun
             >
               <label className="block mb-3.5">
                 <span className="block text-[14px] mb-1.5">
@@ -95,6 +208,7 @@ export default function Home() {
                 <input
                   required
                   type="text"
+                  name="name" // 👈 URL’da ?name= ...
                   placeholder="Ismingiz"
                   className="w-full h-12 rounded-[10px] border border-[#D3D3D3] bg-white px-4 text-[14px] placeholder:text-[#B4B4B4] outline-none focus:border-[#FF8500]"
                 />
@@ -108,12 +222,12 @@ export default function Home() {
                 <div className="flex gap-1.5">
                   <div className="relative w-[88px]">
                     <select
-                      name="countryCode"
+                      name="countryCode" // 👈 URL’da ?countryCode=%2B998
                       defaultValue="+998"
                       required
                       className="w-full h-12 rounded-[10px] bg-[#A6A6A6] text-white
-                        px-3 pr-8 text-[14px] outline-none cursor-pointer
-                        appearance-none"
+            px-3 pr-8 text-[14px] outline-none cursor-pointer
+            appearance-none"
                     >
                       <option value="+998">+998</option>
                       <option value="+7">+7</option>
@@ -143,11 +257,11 @@ export default function Home() {
 
                   <input
                     type="tel"
-                    name="phone"
+                    name="phone" // 👈 URL’da ?phone=111111111
                     placeholder="88 888 88 88"
                     required
                     className="flex-1 h-12 rounded-[10px] border border-[#D3D3D3] bg-white px-4
-                      text-[14px] placeholder:text-[#B4B4B4] outline-none focus:border-[#FF8500] w-full"
+          text-[14px] placeholder:text-[#B4B4B4] outline-none focus:border-[#FF8500] w-full"
                   />
                 </div>
               </label>
@@ -187,7 +301,7 @@ export default function Home() {
           height={740}
         />
         <div className="max-w-[500px] mx-auto px-4">
-          <div className="[@media(max-width:400px)]:pb-[250px] pb-[345px] relative">
+          <div className="[@media(max-width:400px)]:pb-[250px] pb-[325px] relative">
             <h1 className="font-[750] leading-[130%] text-white font-[HelveticaNeueLTStd] text-[clamp(18px,6.2vw,32px)] mt-6">
               Orzuyingizdagi uy{" "}
               <span className="bg-[#F18107] text-white px-1">
@@ -340,13 +454,15 @@ export default function Home() {
           </h2>
 
           <div className="max-w-[500px] mx-auto w-full overflow-hidden">
-            <Image
-              src={mapImage}
-              alt="Manzilimiz xaritada"
-              width={374}
-              height={220}
-              className="w-full h-auto object-cover"
-            />
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6194403.047776734!2d62.66547909486545!3d40.70456716190876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b20a5d676b1%3A0xca0a6dad7e841e20!2z0KPQt9Cx0LXQutC40YHRgtCw0L0!5e0!3m2!1sru!2s!4v1763468568867!5m2!1sru!2s"
+              width="600"
+              height="450"
+              style={{ border: "0" }}
+              allowFullScreen={false}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
 
           <div className="bg-[#1A1A1A] px-4 py-3">
@@ -378,7 +494,7 @@ export default function Home() {
                 </div>
 
                 <a
-                  href="tel:+998911265503"
+                  href="tel:+998785559090"
                   className="flex items-center gap-y-2.5 gap-x-[7px] text-white rounded-full font-bold underline text-[18px]"
                 >
                   <Image
@@ -388,7 +504,7 @@ export default function Home() {
                     height={22}
                     className="w-3.5 h-3.5 object-contain"
                   />
-                  <span>+998 91-126-55-03</span>
+                  <span>+998 78-555-90-90</span>
                 </a>
               </div>
             </div>
@@ -397,18 +513,18 @@ export default function Home() {
       </section>
 
       {/* ==== Narxlar modali ==== */}
-      {openModal && (
+      {openModal === 1 && (
         <>
           <div
             className="fixed inset-0 bg-black/40 z-40"
-            onClick={() => setopenModal(false)}
+            onClick={() => setopenModal(0)}
           />
 
           <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
             <div className="relative w-full max-w-[360px] bg-white rounded-[26px] shadow-[0_12px_40px_rgba(0,0,0,0.25)] pt-6 pb-5 px-4">
               <button
                 type="button"
-                onClick={() => setopenModal(false)}
+                onClick={() => setopenModal(0)}
                 className="absolute right-3 top-3 w-7 h-7 flex items-center justify-center rounded-full text-black text-[20px]"
               >
                 <svg
@@ -486,7 +602,7 @@ export default function Home() {
                 </div>
 
                 {selectedPlan.hasBonus ? (
-                  <div className="rounded-[14px] flex justify-between items-start overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.12)] pl-2.5">
+                  <div className="rounded-[14px] flex justify-between items-start overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.12)] pl-2.5 h-[105px]">
                     <div className="mt-2.5">
                       <p className="text-[18px] font-[750] mb-1">
                         {selectedPlan.bonusTitle}
@@ -495,18 +611,38 @@ export default function Home() {
                         {selectedPlan.bonusText}
                       </p>
                     </div>
-                    <div className="w-full max-w-[168px] fex bg-linear-to-r from-[#FF8500] to-[#FFB733] px-3 flex items-center justify-center m-1 rounded-[10px]">
+                    <div className="w-full h-full max-w-[168px] border-2 border-white  bg-linear-to-r from-[#FF8500] to-[#FFB733] px-3 flex items-center justify-center rounded-[10px] py-1">
                       {/* Konditsioner rasmi bo'lsa shu yerga qo'yasan */}
-                      <Image
-                        src="/konditsioner.png"
-                        alt="Bonus"
-                        width={115}
-                        height={86}
-                      />
+                      {selectedPlan.id === "25" && (
+                        <Image
+                          src="/konditsioner.png"
+                          alt="Bonus"
+                          width={115}
+                          height={86}
+                        />
+                      )}
+
+                      {selectedPlan.id === "60" && (
+                        <Image
+                          src="/sovga-rasmlari.png"
+                          alt="Bonus"
+                          width={150}
+                          height={79}
+                        />
+                      )}
+
+                      {selectedPlan.id === "120" && (
+                        <Image
+                          src="/sovga-rasmlari-2.png"
+                          alt="Bonus"
+                          width={159}
+                          height={79}
+                        />
+                      )}
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]  h-[105px]">
                     <p className="text-[11px] font-bold mb-1">BONUS</p>
                     <p className="text-[12px] leading-[1.2]">
                       {selectedPlan.bonusText}
@@ -518,7 +654,466 @@ export default function Home() {
               <button
                 onClick={() => {
                   setmodalIsOpen(true);
-                  setopenModal(false);
+                  setopenModal(1);
+                }}
+                className="py-2.5 w-full bg-[#FF8500] border border-[#C26500] rounded-[100px] font-bold text-white shadow-[0px_4px_0px_0px_#C26500] text-[clamp(15px,3.5vw,20px)]"
+              >
+                Operator bilan bog’lanish {">>"}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* ==== Narxlar modali ==== */}
+      {openModal === 2 && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/40 z-40"
+            onClick={() => setopenModal(0)}
+          />
+
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+            <div className="relative w-full max-w-[360px] bg-white rounded-[26px] shadow-[0_12px_40px_rgba(0,0,0,0.25)] pt-6 pb-5 px-4">
+              <button
+                type="button"
+                onClick={() => setopenModal(0)}
+                className="absolute right-3 top-3 w-7 h-7 flex items-center justify-center rounded-full text-black text-[20px]"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M8.00911 10.1537L13.3973 15.5357C13.6833 15.8213 14.0711 15.9818 14.4754 15.9818C14.8798 15.9818 15.2675 15.8213 15.5535 15.5357C15.8394 15.2502 16 14.8628 16 14.4589C16 14.055 15.8394 13.6677 15.5535 13.3821L10.1632 8L15.5524 2.61791C15.6939 2.4765 15.8062 2.30863 15.8827 2.12389C15.9593 1.93916 15.9987 1.74117 15.9986 1.54123C15.9986 1.34129 15.9591 1.14332 15.8825 0.958621C15.8058 0.773921 15.6935 0.606108 15.5519 0.464764C15.4104 0.32342 15.2423 0.211313 15.0574 0.134844C14.8724 0.0583746 14.6742 0.0190406 14.474 0.0190878C14.2739 0.0191349 14.0757 0.0585623 13.8908 0.135119C13.7058 0.211675 13.5378 0.323861 13.3963 0.465272L8.00911 5.84737L2.62088 0.465272C2.48035 0.319805 2.31223 0.20375 2.12632 0.123877C1.94041 0.044005 1.74044 0.00191503 1.53807 6.38416e-05C1.3357 -0.00178735 1.13499 0.0366372 0.947644 0.113095C0.760302 0.189553 0.590079 0.302514 0.44691 0.445385C0.30374 0.588257 0.19049 0.758179 0.113768 0.945236C0.0370463 1.13229 -0.00161105 1.33274 5.14305e-05 1.53488C0.00171391 1.73702 0.0436629 1.9368 0.123451 2.12258C0.203239 2.30835 0.319268 2.47639 0.464769 2.61689L5.85504 8L0.465785 13.3831C0.320284 13.5236 0.204255 13.6917 0.124467 13.8774C0.0446789 14.0632 0.00272991 14.263 0.00106743 14.4651C-0.000595046 14.6673 0.0380623 14.8677 0.114784 15.0548C0.191506 15.2418 0.304756 15.4117 0.447926 15.5546C0.591095 15.6975 0.761318 15.8104 0.94866 15.8869C1.136 15.9634 1.33671 16.0018 1.53908 15.9999C1.74145 15.9981 1.94142 15.956 2.12733 15.8761C2.31324 15.7963 2.48137 15.6802 2.62189 15.5347L8.00911 10.1537Z"
+                    fill="black"
+                  />
+                </svg>
+              </button>
+
+              <h2 className="text-center font-[750] text-[18px] leading-[120%] mb-4 uppercase font-[HelveticaNeueLTStd]">
+                NARXLAR BILAN <br /> BATAFSIL TANISHING
+              </h2>
+
+              <div className="mb-4">
+                <div className="relative">
+                  <select
+                    value={selectedPlanId2}
+                    onChange={(e) => setSelectedPlanId2(e.target.value)}
+                    className="w-full h-[46px] rounded-[10px] bg-[#FC4A06] text-white text-[14px] font-[750] px-4 pr-9 shadow-[0_4px_0_0_#C26500] outline-none cursor-pointer appearance-none"
+                  >
+                    <option value="no-start">
+                      Boshlang'ich to'lovni tanlang
+                    </option>
+                    {plans2.map((plan) => (
+                      <option key={plan.id} value={plan.id}>
+                        {plan.label}
+                      </option>
+                    ))}
+                  </select>
+
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3 4.5L6 7.5L9 4.5"
+                        stroke="white"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <div className="space-y-2.5 mb-5">
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+                    <p className="text-[18px] font-bold mb-1">Chegirma:</p>
+                    <p className="text-[12px] leading-[1.2]">
+                      {selectedPlan2.discount}
+                    </p>
+                  </div>
+
+                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+                    <p className="text-[18px] font-bold mb-1">Oylik to‘lov:</p>
+                    <p className="text-[12px] leading-[1.2]">
+                      {selectedPlan2.payment}
+                    </p>
+                  </div>
+                </div>
+
+                {selectedPlan2.hasBonus ? (
+                  <div className="rounded-[14px] flex justify-between items-start overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.12)] pl-2.5 h-[105px]">
+                    <div className="mt-2.5">
+                      <p className="text-[18px] font-[750] mb-1">
+                        {selectedPlan2.bonusTitle}
+                      </p>
+                      <p className="text-[14px] leading-[1.2]">
+                        {selectedPlan2.bonusText}
+                      </p>
+                    </div>
+                    <div className="w-full h-full max-w-[168px] border-2 border-white  bg-linear-to-r from-[#FF8500] to-[#FFB733] px-3 flex items-center justify-center rounded-[10px] py-1">
+                      {/* Konditsioner rasmi bo'lsa shu yerga qo'yasan */}
+                      {selectedPlan2.id === "25" && (
+                        <Image
+                          src="/konditsioner.png"
+                          alt="Bonus"
+                          width={115}
+                          height={86}
+                        />
+                      )}
+
+                      {selectedPlan2.id === "60" && (
+                        <Image
+                          src="/sovga-rasmlari.png"
+                          alt="Bonus"
+                          width={150}
+                          height={79}
+                        />
+                      )}
+
+                      {selectedPlan2.id === "120" && (
+                        <Image
+                          src="/sovga-rasmlari-2.png"
+                          alt="Bonus"
+                          width={159}
+                          height={79}
+                        />
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]  h-[105px]">
+                    <p className="text-[11px] font-bold mb-1">BONUS</p>
+                    <p className="text-[12px] leading-[1.2]">
+                      {selectedPlan.bonusText}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <button
+                onClick={() => {
+                  setmodalIsOpen(true);
+                  setopenModal(0);
+                }}
+                className="py-2.5 w-full bg-[#FF8500] border border-[#C26500] rounded-[100px] font-bold text-white shadow-[0px_4px_0px_0px_#C26500] text-[clamp(15px,3.5vw,20px)]"
+              >
+                Operator bilan bog’lanish {">>"}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* ==== Narxlar modali ==== */}
+      {openModal === 3 && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/40 z-40"
+            onClick={() => setopenModal(0)}
+          />
+
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+            <div className="relative w-full max-w-[360px] bg-white rounded-[26px] shadow-[0_12px_40px_rgba(0,0,0,0.25)] pt-6 pb-5 px-4">
+              <button
+                type="button"
+                onClick={() => setopenModal(0)}
+                className="absolute right-3 top-3 w-7 h-7 flex items-center justify-center rounded-full text-black text-[20px]"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M8.00911 10.1537L13.3973 15.5357C13.6833 15.8213 14.0711 15.9818 14.4754 15.9818C14.8798 15.9818 15.2675 15.8213 15.5535 15.5357C15.8394 15.2502 16 14.8628 16 14.4589C16 14.055 15.8394 13.6677 15.5535 13.3821L10.1632 8L15.5524 2.61791C15.6939 2.4765 15.8062 2.30863 15.8827 2.12389C15.9593 1.93916 15.9987 1.74117 15.9986 1.54123C15.9986 1.34129 15.9591 1.14332 15.8825 0.958621C15.8058 0.773921 15.6935 0.606108 15.5519 0.464764C15.4104 0.32342 15.2423 0.211313 15.0574 0.134844C14.8724 0.0583746 14.6742 0.0190406 14.474 0.0190878C14.2739 0.0191349 14.0757 0.0585623 13.8908 0.135119C13.7058 0.211675 13.5378 0.323861 13.3963 0.465272L8.00911 5.84737L2.62088 0.465272C2.48035 0.319805 2.31223 0.20375 2.12632 0.123877C1.94041 0.044005 1.74044 0.00191503 1.53807 6.38416e-05C1.3357 -0.00178735 1.13499 0.0366372 0.947644 0.113095C0.760302 0.189553 0.590079 0.302514 0.44691 0.445385C0.30374 0.588257 0.19049 0.758179 0.113768 0.945236C0.0370463 1.13229 -0.00161105 1.33274 5.14305e-05 1.53488C0.00171391 1.73702 0.0436629 1.9368 0.123451 2.12258C0.203239 2.30835 0.319268 2.47639 0.464769 2.61689L5.85504 8L0.465785 13.3831C0.320284 13.5236 0.204255 13.6917 0.124467 13.8774C0.0446789 14.0632 0.00272991 14.263 0.00106743 14.4651C-0.000595046 14.6673 0.0380623 14.8677 0.114784 15.0548C0.191506 15.2418 0.304756 15.4117 0.447926 15.5546C0.591095 15.6975 0.761318 15.8104 0.94866 15.8869C1.136 15.9634 1.33671 16.0018 1.53908 15.9999C1.74145 15.9981 1.94142 15.956 2.12733 15.8761C2.31324 15.7963 2.48137 15.6802 2.62189 15.5347L8.00911 10.1537Z"
+                    fill="black"
+                  />
+                </svg>
+              </button>
+
+              <h2 className="text-center font-[750] text-[18px] leading-[120%] mb-4 uppercase font-[HelveticaNeueLTStd]">
+                NARXLAR BILAN <br /> BATAFSIL TANISHING
+              </h2>
+
+              <div className="mb-4">
+                <div className="relative">
+                  <select
+                    value={selectedPlanId3}
+                    onChange={(e) => setSelectedPlanId3(e.target.value)}
+                    className="w-full h-[46px] rounded-[10px] bg-[#FC4A06] text-white text-[14px] font-[750] px-4 pr-9 shadow-[0_4px_0_0_#C26500] outline-none cursor-pointer appearance-none"
+                  >
+                    <option value="no-start">
+                      Boshlang'ich to'lovni tanlang
+                    </option>
+                    {plans3.map((plan) => (
+                      <option key={plan.id} value={plan.id}>
+                        {plan.label}
+                      </option>
+                    ))}
+                  </select>
+
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3 4.5L6 7.5L9 4.5"
+                        stroke="white"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <div className="space-y-2.5 mb-5">
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+                    <p className="text-[18px] font-bold mb-1">Chegirma:</p>
+                    <p className="text-[12px] leading-[1.2]">
+                      {selectedPlan3.discount}
+                    </p>
+                  </div>
+
+                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+                    <p className="text-[18px] font-bold mb-1">Oylik to‘lov:</p>
+                    <p className="text-[12px] leading-[1.2]">
+                      {selectedPlan3.payment}
+                    </p>
+                  </div>
+                </div>
+
+                {selectedPlan3.hasBonus ? (
+                  <div className="rounded-[14px] flex justify-between items-start overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.12)] pl-2.5 h-[105px]">
+                    <div className="mt-2.5">
+                      <p className="text-[18px] font-[750] mb-1">
+                        {selectedPlan3.bonusTitle}
+                      </p>
+                      <p className="text-[14px] leading-[1.2]">
+                        {selectedPlan3.bonusText}
+                      </p>
+                    </div>
+                    <div className="w-full h-full max-w-[168px] border-2 border-white  bg-linear-to-r from-[#FF8500] to-[#FFB733] px-3 flex items-center justify-center rounded-[10px] py-1">
+                      {/* Konditsioner rasmi bo'lsa shu yerga qo'yasan */}
+                      {selectedPlan3.id === "25" && (
+                        <Image
+                          src="/konditsioner.png"
+                          alt="Bonus"
+                          width={115}
+                          height={86}
+                        />
+                      )}
+
+                      {selectedPlan3.id === "60" && (
+                        <Image
+                          src="/sovga-rasmlari.png"
+                          alt="Bonus"
+                          width={150}
+                          height={79}
+                        />
+                      )}
+
+                      {selectedPlan3.id === "120" && (
+                        <Image
+                          src="/sovga-rasmlari-2.png"
+                          alt="Bonus"
+                          width={159}
+                          height={79}
+                        />
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]  h-[105px]">
+                    <p className="text-[11px] font-bold mb-1">BONUS</p>
+                    <p className="text-[12px] leading-[1.2]">
+                      {selectedPlan.bonusText}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <button
+                onClick={() => {
+                  setmodalIsOpen(true);
+                  setopenModal(0);
+                }}
+                className="py-2.5 w-full bg-[#FF8500] border border-[#C26500] rounded-[100px] font-bold text-white shadow-[0px_4px_0px_0px_#C26500] text-[clamp(15px,3.5vw,20px)]"
+              >
+                Operator bilan bog’lanish {">>"}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* ==== Narxlar modali ==== */}
+      {openModal === 4 && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/40 z-40"
+            onClick={() => setopenModal(0)}
+          />
+
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+            <div className="relative w-full max-w-[360px] bg-white rounded-[26px] shadow-[0_12px_40px_rgba(0,0,0,0.25)] pt-6 pb-5 px-4">
+              <button
+                type="button"
+                onClick={() => setopenModal(0)}
+                className="absolute right-3 top-3 w-7 h-7 flex items-center justify-center rounded-full text-black text-[20px]"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M8.00911 10.1537L13.3973 15.5357C13.6833 15.8213 14.0711 15.9818 14.4754 15.9818C14.8798 15.9818 15.2675 15.8213 15.5535 15.5357C15.8394 15.2502 16 14.8628 16 14.4589C16 14.055 15.8394 13.6677 15.5535 13.3821L10.1632 8L15.5524 2.61791C15.6939 2.4765 15.8062 2.30863 15.8827 2.12389C15.9593 1.93916 15.9987 1.74117 15.9986 1.54123C15.9986 1.34129 15.9591 1.14332 15.8825 0.958621C15.8058 0.773921 15.6935 0.606108 15.5519 0.464764C15.4104 0.32342 15.2423 0.211313 15.0574 0.134844C14.8724 0.0583746 14.6742 0.0190406 14.474 0.0190878C14.2739 0.0191349 14.0757 0.0585623 13.8908 0.135119C13.7058 0.211675 13.5378 0.323861 13.3963 0.465272L8.00911 5.84737L2.62088 0.465272C2.48035 0.319805 2.31223 0.20375 2.12632 0.123877C1.94041 0.044005 1.74044 0.00191503 1.53807 6.38416e-05C1.3357 -0.00178735 1.13499 0.0366372 0.947644 0.113095C0.760302 0.189553 0.590079 0.302514 0.44691 0.445385C0.30374 0.588257 0.19049 0.758179 0.113768 0.945236C0.0370463 1.13229 -0.00161105 1.33274 5.14305e-05 1.53488C0.00171391 1.73702 0.0436629 1.9368 0.123451 2.12258C0.203239 2.30835 0.319268 2.47639 0.464769 2.61689L5.85504 8L0.465785 13.3831C0.320284 13.5236 0.204255 13.6917 0.124467 13.8774C0.0446789 14.0632 0.00272991 14.263 0.00106743 14.4651C-0.000595046 14.6673 0.0380623 14.8677 0.114784 15.0548C0.191506 15.2418 0.304756 15.4117 0.447926 15.5546C0.591095 15.6975 0.761318 15.8104 0.94866 15.8869C1.136 15.9634 1.33671 16.0018 1.53908 15.9999C1.74145 15.9981 1.94142 15.956 2.12733 15.8761C2.31324 15.7963 2.48137 15.6802 2.62189 15.5347L8.00911 10.1537Z"
+                    fill="black"
+                  />
+                </svg>
+              </button>
+
+              <h2 className="text-center font-[750] text-[18px] leading-[120%] mb-4 uppercase font-[HelveticaNeueLTStd]">
+                NARXLAR BILAN <br /> BATAFSIL TANISHING
+              </h2>
+
+              <div className="mb-4">
+                <div className="relative">
+                  <select
+                    value={selectedPlanId4}
+                    onChange={(e) => setSelectedPlanId4(e.target.value)}
+                    className="w-full h-[46px] rounded-[10px] bg-[#FC4A06] text-white text-[14px] font-[750] px-4 pr-9 shadow-[0_4px_0_0_#C26500] outline-none cursor-pointer appearance-none"
+                  >
+                    <option value="no-start">
+                      Boshlang'ich to'lovni tanlang
+                    </option>
+                    {plans4.map((plan) => (
+                      <option key={plan.id} value={plan.id}>
+                        {plan.label}
+                      </option>
+                    ))}
+                  </select>
+
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3 4.5L6 7.5L9 4.5"
+                        stroke="white"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <div className="space-y-2.5 mb-5">
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+                    <p className="text-[18px] font-bold mb-1">Chegirma:</p>
+                    <p className="text-[12px] leading-[1.2]">
+                      {selectedPlan4.discount}
+                    </p>
+                  </div>
+
+                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+                    <p className="text-[18px] font-bold mb-1">Oylik to‘lov:</p>
+                    <p className="text-[12px] leading-[1.2]">
+                      {selectedPlan4.payment}
+                    </p>
+                  </div>
+                </div>
+
+                {selectedPlan4.hasBonus ? (
+                  <div className="rounded-[14px] flex justify-between items-start overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.12)] pl-2.5 h-[105px]">
+                    <div className="mt-2.5">
+                      <p className="text-[18px] font-[750] mb-1">
+                        {selectedPlan4.bonusTitle}
+                      </p>
+                      <p className="text-[14px] leading-[1.2]">
+                        {selectedPlan4.bonusText}
+                      </p>
+                    </div>
+                    <div className="w-full h-full max-w-[168px] border-2 border-white  bg-linear-to-r from-[#FF8500] to-[#FFB733] px-3 flex items-center justify-center rounded-[10px] py-1">
+                      {/* Konditsioner rasmi bo'lsa shu yerga qo'yasan */}
+                      {selectedPlan4.id === "25" && (
+                        <Image
+                          src="/konditsioner.png"
+                          alt="Bonus"
+                          width={115}
+                          height={86}
+                        />
+                      )}
+
+                      {selectedPlan4.id === "60" && (
+                        <Image
+                          src="/sovga-rasmlari.png"
+                          alt="Bonus"
+                          width={150}
+                          height={79}
+                        />
+                      )}
+
+                      {selectedPlan4.id === "120" && (
+                        <Image
+                          src="/sovga-rasmlari-2.png"
+                          alt="Bonus"
+                          width={159}
+                          height={79}
+                        />
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-[14px] border border-[#FFD6B6] px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.06)]  h-[105px]">
+                    <p className="text-[11px] font-bold mb-1">BONUS</p>
+                    <p className="text-[12px] leading-[1.2]">
+                      {selectedPlan.bonusText}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <button
+                onClick={() => {
+                  setmodalIsOpen(true);
+                  setopenModal(0);
                 }}
                 className="py-2.5 w-full bg-[#FF8500] border border-[#C26500] rounded-[100px] font-bold text-white shadow-[0px_4px_0px_0px_#C26500] text-[clamp(15px,3.5vw,20px)]"
               >

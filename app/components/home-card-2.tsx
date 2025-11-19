@@ -45,6 +45,7 @@ export const secoundHouses = [
 
 // 🔹 Bitta kartka + heading bloki
 export function HouseBlockSecont({
+  setopenModal,
   id,
   title,
   floor,
@@ -52,6 +53,7 @@ export function HouseBlockSecont({
   rooms,
   images,
 }: {
+  setopenModal: any;
   id: number;
   title: string;
   floor: string;
@@ -60,7 +62,11 @@ export function HouseBlockSecont({
   images: string[];
 }) {
   return (
-    <div className={` ${id % 2 === 1 ? "bg-[#ECECEC]" : ""} pt-[33px] pb-10 w-full px-4`}>
+    <div
+      className={` ${
+        id % 2 === 1 ? "bg-[#ECECEC]" : ""
+      } pt-[33px] pb-10 w-full px-4`}
+    >
       <div className="max-w-[374px] mx-auto border border-[#000000] p-[15px] rounded-[20px] bg-white">
         <div className="max-w-[374px] mx-auto space-y-10">
           {/* IMAGE SWIPER ONLY HERE */}
@@ -122,7 +128,10 @@ export function HouseBlockSecont({
             </div>
           </div>
 
-          <button className="py-2.5 w-full bg-[#FF8500] border border-[#C26500] rounded-[100px] font-bold text-white shadow-[0px_4px_0px_0px_#C26500] text-[clamp(15px,3.5vw,20px)]">
+          <button
+            onClick={() => setopenModal(id)}
+            className="py-2.5 w-full bg-[#FF8500] border border-[#C26500] rounded-[100px] font-bold text-white shadow-[0px_4px_0px_0px_#C26500] text-[clamp(15px,3.5vw,20px)]"
+          >
             Narxlar va sovg’alarni bilish {">>"}
           </button>
         </div>
