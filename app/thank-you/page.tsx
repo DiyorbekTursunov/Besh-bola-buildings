@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,10 +8,7 @@ const GOOGLE_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwhQLovZhZgIcOpWIYWitkWkT_4RVgkXdBWMfM0bdp4TtPjmA7uEwUKLY3c19401sSr/exec";
 
 const ThankYou = () => {
-  const searchParams = useSearchParams();
-
   useEffect(() => {
-    // SSR / build paytida window yo'q, shuning uchun guard
     if (typeof window === "undefined") return;
 
     const params = new URLSearchParams(window.location.search);
@@ -26,14 +22,12 @@ const ThankYou = () => {
       return;
     }
 
-    // faqat raqamlarni olib, to‘liq raqam yasaymiz
     const digits = phoneParam.replace(/\D/g, "");
     const fullPhone =
       phoneParam.startsWith("+") || phoneParam.startsWith("00")
         ? phoneParam
         : `${countryCode}${digits}`;
 
-    // Sana + vaqt
     const now = new Date();
     const pad = (n: number) => String(n).padStart(2, "0");
     const formattedDateTime = `${now.getFullYear()}-${pad(
@@ -42,21 +36,22 @@ const ThankYou = () => {
       now.getMinutes()
     )}:${pad(now.getSeconds())}`;
 
-    // 🔥 FormData qilib yuboramiz – CORS preflight bo‘lmaydi
     const formData = new FormData();
     formData.append("sheetName", "Lead");
     formData.append("Telefon raqam", fullPhone);
     formData.append("Royhatdan o'tgan vaqti", formattedDateTime);
-    formData.append("Ism", nameParam)
-
+    if (nameParam) {
+      formData.append("Ism", nameParam);
+    }
 
     fetch(GOOGLE_SCRIPT_URL, {
       method: "POST",
       body: formData,
+      mode: "no-cors", // xohlasang qoldir, xavfsizroq
     }).catch((err) => {
-      console.error("Failed to send lead (no-cors):", err);
+      console.error("Failed to send lead:", err);
     });
-  }, [searchParams]);
+  }, []); // <== hech qanday hook depend yo'q
 
   return (
     <>
