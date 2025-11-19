@@ -12,9 +12,14 @@ const ThankYou = () => {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const countryCode = searchParams.get("countryCode") || "+998";
-    const phoneParam = searchParams.get("phone") || "";
-    const nameParam = searchParams.get("name") || "";
+    // SSR / build paytida window yo'q, shuning uchun guard
+    if (typeof window === "undefined") return;
+
+    const params = new URLSearchParams(window.location.search);
+
+    const countryCode = params.get("countryCode") || "+998";
+    const phoneParam = params.get("phone") || "";
+    const nameParam = params.get("name") || "";
 
     if (!phoneParam) {
       console.warn("No phone in URL, skipping lead send");
@@ -42,11 +47,8 @@ const ThankYou = () => {
     formData.append("sheetName", "Lead");
     formData.append("Telefon raqam", fullPhone);
     formData.append("Royhatdan o'tgan vaqti", formattedDateTime);
+    formData.append("Ism", nameParam)
 
-    // agar `Lead` varaqiga `Ism` ustunini qo‘shgan bo‘lsang:
-    if (nameParam) {
-      formData.append("Ism", nameParam);
-    }
 
     fetch(GOOGLE_SCRIPT_URL, {
       method: "POST",
