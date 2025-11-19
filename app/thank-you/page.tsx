@@ -7,51 +7,91 @@ import Link from "next/link";
 const GOOGLE_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwhQLovZhZgIcOpWIYWitkWkT_4RVgkXdBWMfM0bdp4TtPjmA7uEwUKLY3c19401sSr/exec";
 
+const UYSOT_URL = "https://service.app.uysot.uz/v1/external-source";
+// ⚠️ Ideally keep this token on the server, not in the client bundle
+const UYSOT_AUTH =
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNzgiLCJleHAiOjcwNTQyMTY2OTJ9.CvlQBF3rqlz7AHId14MOCgUa97aPtzqjHyDuh3jubk0";
+
 const ThankYou = () => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const params = new URLSearchParams(window.location.search);
+    const run = async () => {
+      const params = new URLSearchParams(window.location.search);
 
-    const countryCode = params.get("countryCode") || "+998";
-    const phoneParam = params.get("phone") || "";
-    const nameParam = params.get("name") || "";
+      const countryCode = params.get("countryCode") || "+998";
+      const phoneParam = params.get("phone") || "";
+      const nameParam = params.get("name") || "";
+      const emailParam = params.get("email") || ""; // agar URL’da bo‘lsa
 
-    if (!phoneParam) {
-      console.warn("No phone in URL, skipping lead send");
-      return;
-    }
+      if (!phoneParam) {
+        console.warn("No phone in URL, skipping lead send");
+        return;
+      }
 
-    const digits = phoneParam.replace(/\D/g, "");
-    const fullPhone =
-      phoneParam.startsWith("+") || phoneParam.startsWith("00")
-        ? phoneParam
-        : `${countryCode}${digits}`;
+      // faqat raqamlarni olib, countryCode bilan to‘liq raqam yasaymiz
+      const digits = phoneParam.replace(/\D/g, "");
+      const fullPhone =
+        phoneParam.startsWith("+") || phoneParam.startsWith("00")
+          ? phoneParam
+          : `${countryCode}${digits}`;
 
-    const now = new Date();
-    const pad = (n: number) => String(n).padStart(2, "0");
-    const formattedDateTime = `${now.getFullYear()}-${pad(
-      now.getMonth() + 1
-    )}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(
-      now.getMinutes()
-    )}:${pad(now.getSeconds())}`;
+      const now = new Date();
+      const pad = (n: number) => String(n).padStart(2, "0");
+      const formattedDateTime = `${now.getFullYear()}-${pad(
+        now.getMonth() + 1
+      )}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(
+        now.getMinutes()
+      )}:${pad(now.getSeconds())}`;
 
-    const formData = new FormData();
-    formData.append("sheetName", "Lead");
-    formData.append("Telefon raqam", fullPhone);
-    formData.append("Royhatdan o'tgan vaqti", formattedDateTime);
-    if (nameParam) {
-      formData.append("Ism", nameParam);
-    }
+      // 1) Google Sheets (Apps Script)
+      const formData = new FormData();
+      formData.append("sheetName", "Lead");
+      formData.append("Telefon raqam", fullPhone);
+      formData.append("Royhatdan o'tgan vaqti", formattedDateTime);
+      if (nameParam) {
+        formData.append("Ism", nameParam);
+      }
 
-    fetch(GOOGLE_SCRIPT_URL, {
-      method: "POST",
-      body: formData,
-      mode: "no-cors", // xohlasang qoldir, xavfsizroq
-    }).catch((err) => {
-      console.error("Failed to send lead:", err);
-    });
-  }, []); // <== hech qanday hook depend yo'q
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors",
+      }).catch((err) => {
+        console.error("Failed to send lead to Google Script:", err);
+      });
+
+      // 2) Uysot external-source API
+      try {
+        const res = await fetch(UYSOT_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth": UYSOT_AUTH,
+          },
+          body: JSON.stringify({
+            phoneNumber: fullPhone,          // required
+            name: nameParam || undefined,    // optional
+            email: emailParam || undefined,  // optional
+            message: "Lead from Besh bola buildings landing page",
+            tagList: ["besh-bola-buildings", "website-lead"], // xohlagan tag’laringni qo‘y
+          }),
+        });
+
+        if (!res.ok) {
+          console.error(
+            "Failed to send lead to Uysot:",
+            res.status,
+            res.statusText
+          );
+        }
+      } catch (error) {
+        console.error("Error sending lead to Uysot:", error);
+      }
+    };
+
+    void run();
+  }, []);
 
   return (
     <>
