@@ -26,6 +26,27 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* GA4 – external script */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-256H63VXCF"
+          strategy="afterInteractive"
+        />
+
+        {/* GA4 – init */}
+        <Script
+          id="ga4-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-256H63VXCF');
+            `,
+          }}
+        />
+
+        {/* Facebook Pixel */}
         <Script
           id="fb-pixel"
           strategy="afterInteractive"
@@ -44,6 +65,11 @@ export default function RootLayout({
             `,
           }}
         />
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {/* FB Pixel noscript variant – body ichida bo‘lgani yaxshiroq */}
         <noscript>
           <img
             height="1"
@@ -53,10 +79,7 @@ export default function RootLayout({
             alt="facebook pixel"
           />
         </noscript>
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+
         {children}
       </body>
     </html>
