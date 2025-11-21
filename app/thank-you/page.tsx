@@ -70,9 +70,9 @@ const ThankYou = () => {
             "X-Auth": UYSOT_AUTH,
           },
           body: JSON.stringify({
-            phoneNumber: fullPhone,          // required
-            name: nameParam || undefined,    // optional
-            email: emailParam || undefined,  // optional
+            phoneNumber: fullPhone, // required
+            name: nameParam || undefined, // optional
+            email: emailParam || undefined, // optional
             message: "Lead from Besh bola buildings landing page",
             tagList: ["besh-bola-buildings", "website-lead"], // xohlagan tag’laringni qo‘y
           }),
@@ -124,10 +124,10 @@ const ThankYou = () => {
         </h2>
 
         <Link
-          href="/"
+          href="https://t.me/+MeXvwji3z6BkYzZi"
           className="w-full max-w-[293px] h-[54px] rounded-[999px] bg-[#FF8500] text-white font-[750] text-[clamp(15px,4vw,18px)] shadow-[0_6px_0_0_#C26500] flex items-center justify-center mt-2"
         >
-          Asosiy sahifaga qaytish
+          Telegramga o'tish
         </Link>
       </section>
     </>
