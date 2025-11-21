@@ -514,7 +514,7 @@ export default function Home() {
 
       <Link
         className="call-operator"
-        href=""
+        href="tel:+998785559090"
         target="_blank"
         rel="noopener noreferrer"
       >
