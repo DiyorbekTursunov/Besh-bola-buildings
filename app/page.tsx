@@ -315,7 +315,7 @@ export default function Home() {
 
           <button
             onClick={() => setmodalIsOpen(true)}
-            className="w-full max-w-[433px] flex items-center justify-center font-bold gap-1 bg-[#FF8500] text-white [@media(max-width:400px)]:py-[25px] py-10 px-[30px] rounded-2xl font-[HelveticaNeueLTStd] [@media(max-width:400px)]:mb-[30px] mb-[60px] text-[clamp(12px,3.8vw,22px)] shadow-[0px_6px_0px_0px_#C26500] mx-auto"
+            className="w-full max-w-[433px] flex items-center justify-center font-bold gap-1 bg-[#FF8500] text-white [@media(max-width:400px)]:py-[25px] py-10 px-[30px] rounded-2xl font-[HelveticaNeueLTStd] [@media(max-width:400px)]:mb-[30px] mb-[60px] text-[clamp(12px,3.8vw,22px)] shadow-[0px_6px_0px_0px_#C26500] mx-auto btn-blink"
           >
             <svg
               width="30"
@@ -427,7 +427,7 @@ export default function Home() {
         <div className="px-4">
           <button
             onClick={() => setmodalIsOpen(true)}
-            className="flex items-center justify-center font-bold gap-1 bg-[#FF8500] text-white [@media(max-width:400px)]:py-[25px] py-10 px-[30px] rounded-2xl font-[HelveticaNeueLTStd] [@media(max-width:400px)]:mb-11 mb-[60px] mx-auto text-[clamp(12.3px,3.4vw,18px)] shadow-[0px_4px_0px_0px_#C26500]"
+            className="flex items-center justify-center font-bold gap-1 bg-[#FF8500] text-white [@media(max-width:400px)]:py-[25px] py-10 px-[30px] rounded-2xl font-[HelveticaNeueLTStd] [@media(max-width:400px)]:mb-11 mb-[60px] mx-auto text-[clamp(12.3px,3.4vw,18px)] shadow-[0px_4px_0px_0px_#C26500] btn-blink"
           >
             <svg
               width="30"
@@ -511,6 +511,15 @@ export default function Home() {
           </div>
         </>
       </section>
+
+      <Link
+        className="call-operator"
+        href=""
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Image src="/phone.png" alt="phone" width={90} height={90} />
+      </Link>
 
       {/* ==== Narxlar modali ==== */}
       {openModal === 1 && (
@@ -656,7 +665,7 @@ export default function Home() {
                   setmodalIsOpen(true);
                   setopenModal(1);
                 }}
-                className="py-2.5 w-full bg-[#FF8500] border border-[#C26500] rounded-[100px] font-bold text-white shadow-[0px_4px_0px_0px_#C26500] text-[clamp(15px,3.5vw,20px)]"
+                className="py-2.5 w-full bg-[#FF8500] border border-[#C26500] rounded-[100px] font-bold text-white shadow-[0px_4px_0px_0px_#C26500] text-[clamp(15px,3.5vw,20px)] btn-blink"
               >
                 Operator bilan bog’lanish {">>"}
               </button>

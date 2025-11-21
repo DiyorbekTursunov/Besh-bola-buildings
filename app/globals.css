@@ -48,3 +48,39 @@
 .custom-select-reset::-ms-expand {
   display: none;
 }
+
+.call-operator {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 50;
+
+  width: 65px; /* adjust size */
+  height: 65px;
+  background-color: #073b76; /* dark blue */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  animation: operatorPulse 1.5s infinite ease-out;
+}
+
+/* phone icon inside */
+.call-operator img {
+  width: 50px; /* icon size */
+  height: 50px;
+}
+
+/* pulse animation */
+@keyframes operatorPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(7, 59, 118, 0.4);
+  }
+  100% {
+    transform: scale(1.06);
+    box-shadow: 0 0 0 18px rgba(7, 59, 118, 0);
+  }
+}
