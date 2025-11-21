@@ -135,5 +135,6 @@ const ThankYou = () => {
     );
 };
 
+// FUCKED
 
 export default ThankYou;
