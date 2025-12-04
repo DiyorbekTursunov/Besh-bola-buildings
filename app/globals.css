@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+@font-face {
+  font-family: "HelveticaNeueLTStd";
+  src: url("../fonts/Helvetica\ Neue\ LT\ Std\ 83\ Heavy\ Extended.otf")
+    format("opentype");
+  font-weight: 750;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.bg-hero {
+  background-image: url(/hero-img.png);
+  width: 100%;
+}
+
+.house-image-swiper .swiper-pagination-bullet {
+  background-color: #000000;
+  opacity: 0.5;
+}
+
+.house-image-swiper .swiper-pagination-bullet-active {
+  background-color: #000000;
+  opacity: 1;
+}
+
+.custom-select-reset {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: none;
+}
+
+.custom-select-reset::-ms-expand {
+  display: none;
+}
+
+.call-operator {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 50;
+
+  width: 65px; /* adjust size */
+  height: 65px;
+  background-color: #073b76; /* dark blue */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  animation: operatorPulse 1.5s infinite ease-out;
+}
+
+/* phone icon inside */
+.call-operator img {
+  width: 50px; /* icon size */
+  height: 50px;
+}
+
+/* pulse animation */
+@keyframes operatorPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(7, 59, 118, 0.4);
+  }
+  100% {
+    transform: scale(1.06);
+    box-shadow: 0 0 0 18px rgba(7, 59, 118, 0);
+  }
+}
